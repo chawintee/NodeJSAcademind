@@ -6,13 +6,13 @@ const server = http.createServer((req,res) => {
     // console.log(req.url, req.method, req.headers);
     const url = req.url;
     const method = req.method;
-    // if (url === '/'){
-    //     res.write('<html>');
-    //     res.write('<header><title>My First Page</title></header>');
-    //     res.write('<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit" name="message">Submit</button></form></body>');
-    //     res.write('</html>');
-    //     return res.end();
-    // }
+    if (url === '/'){
+        res.write('<html>');
+        res.write('<header><title>My First Page</title></header>');
+        res.write('<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit" name="message">Submit</button></form></body>');
+        res.write('</html>');
+        return res.end();
+    }
     // if (url === '/message' && method === 'POST'){
     //     fs.writeFileSync('message.txt', 'Dummy')
     //     res.statusCode = 302
