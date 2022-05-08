@@ -19,7 +19,7 @@ app.use('/admin',adminData.router)
 app.use(shopRouter)
 
 app.use((req,res,next) => {
-    res.sendFile(path.join(__dirname, 'views', 'not-found.html'))
+    res.status(404).render('not-found')
 })
 
 app.listen(3000)
