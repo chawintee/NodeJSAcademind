@@ -19,7 +19,7 @@ app.use('/admin',adminData.router)
 app.use(shopRouter)
 
 app.use((req,res,next) => {
-    res.status(404).render('not-found')
+    res.status(404).render('not-found', {pageTitle: "Page not Found"})
 })
 
 app.listen(3000)
