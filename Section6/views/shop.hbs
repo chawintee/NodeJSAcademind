@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ pageTitle }}</title>
+    <title>{{pageTitle}}</title>
     <link rel="stylesheet" href="/css/main.css">
 
 </head>
@@ -19,8 +19,27 @@
     </header>
 
     <main>
-        <h1>My Products</h1>
-        <p>List of all the products...</p>
+        {{#if hasProducts}}
+        <div class="grid">
+            {{#each prods}}
+            <article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title">{{this.title}}</h1>
+                </header>
+                <div class="card__image">
+                    <img src="https://dictionary.cambridge.org/es-LA/images/full/book_noun_001_01679.jpg?version=5.0.239" alt="book-img" style="width:100px;height:100px;">
+                </div>
+                <div class="card__content">
+                    <h2 class="product__price">$19.99</h2>
+                    <p class="product__description">A very interesting book about so many</p>
+                </div>
+                <div class="card__actions">
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </article>
+            {{/each}}
+        </div>
+        {{/if}}
     </main>
 
 </body>
