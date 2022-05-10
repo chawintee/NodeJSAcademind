@@ -15,7 +15,7 @@ const { request } = require('express')
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/admin',adminData.router)
+app.use('/admin',adminData)
 app.use(shopRouter)
 
 app.use((req,res,next) => {
