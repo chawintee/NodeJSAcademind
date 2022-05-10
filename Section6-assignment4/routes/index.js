@@ -3,7 +3,7 @@ const router = express.Router()
 const path = require('path')
 
 router.get('/', (req,res) => {
-    res.render('index', {pageTitle:"Home page"})
+    res.render('index', {pageTitle:"Home page",})
 })
 
 
