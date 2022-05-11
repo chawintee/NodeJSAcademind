@@ -10,14 +10,10 @@ const postAddProduct = (req,res,next) => {
     res.redirect('/')
 }
 
-const  getProducts = (req,res,next) => {
+const getProducts = (req,res,next) => {
     Product.fetchAll((products)=>{
-        res.render('shop/product-list', {prods: products, pageTitle: "Shop", path: "/", hasProducts: products.length > 0, activeShop: true})
+        res.render('admin/products', {prods: products, pageTitle: "Admin Prodcuts", path: "/admin/products"})
     })
-    // ...
 }
 
-
-
-
-module.exports = { getAddProduct ,postAddProduct ,getProducts }
+module.exports = {getAddProduct, postAddProduct, getProducts}
