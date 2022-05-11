@@ -4,27 +4,10 @@
     margin: auto;
 }
 
-.form-control {
-    margin: 1rem 0;
-}
-
-.form-control label,
-.form-control input {
-    display: block;
-    width: 100%;
-}
-
-.form-control input {
-    border: 1px solid #dbc441;
-    font: inherit;
-    border-radius: 2px;
-
-}
-
 button {
     font: inherit;
-    border: 1px solid #3e00a1;
-    color: #3e00a1;
+    border: 1px solid #00695c;
+    color: #00695c;
     background: white;
     border-radius: 3px;
     cursor: pointer;
@@ -32,7 +15,7 @@ button {
 
 button:hover,
 button:active {
-    background-color: #3e00a1;
+    background-color: #00695c;
     color: white;
 
 }
