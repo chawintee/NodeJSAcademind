@@ -11,11 +11,13 @@
                     <h1 class="product__title"> <%= product.title %> </h1>
                 </header>
                 <div class="card__image">
-                    <img src="https://dictionary.cambridge.org/es-LA/images/full/book_noun_001_01679.jpg?version=5.0.239" alt="book-img" style="width:100px;height:100px;">
+                    <img src="<%= product.imageUrl %>" 
+                    alt="<%= product.title %>" 
+                    style="width:100px;height:100px;">
                 </div>
                 <div class="card__content">
-                    <h2 class="product__price">$19.99</h2>
-                    <p class="product__description">A very interesting book about so many</p>
+                    <h2 class="product__price"><%= product.price %></h2>
+                    <p class="product__description"><%= product.description %></p>
                 </div>
                 <div class="card__actions">
                     <button class="btn">Add to Cart</button>
