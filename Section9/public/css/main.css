@@ -43,3 +43,23 @@ main {
 .main-header__item a.active {
     color: #fff243;
 }
+
+.centered {
+    text-align: center;
+}
+
+button {
+    font: inherit;
+    border: 1px solid #00695c;
+    color: #00695c;
+    background: white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:hover,
+button:active {
+    background-color: #00695c;
+    color: white;
+
+}
