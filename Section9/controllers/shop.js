@@ -1,14 +1,14 @@
 const Product = require('../models/product')
 const Cart = require('../models/cart')
 
-const  getProducts = (req,res,next) => {
+exports.getProducts = (req,res,next) => {
     Product.fetchAll((products)=>{
         res.render('shop/product-list', {prods: products, pageTitle: "All Products", path: "/products"})
     })
     // ...
 }
 
-const  getProduct = (req,res,next) => {
+exports.getProduct = (req,res,next) => {
     const prodId = req.params.productId
     Product.findById(prodId, product => {
         // console.log({product});
@@ -19,20 +19,20 @@ const  getProduct = (req,res,next) => {
     // ...
 }
 
-const getIndex = (req,res,next) => {
+exports.getIndex = (req,res,next) => {
     Product.fetchAll((products)=>{
         res.render('shop/index', {prods: products, pageTitle: "Shop", path: "/"})
     })
 }
 
-const getCart = (req,res,next) => {
+exports.getCart = (req,res,next) => {
     res.render('shop/cart',{
         path: '/cart',
         pageTitle: 'Your Cart'
     })
 }
 
-const postCart = (req,res,next) => {
+exports.postCart = (req,res,next) => {
     const prodId = req.body.productId
     console.log({prodId});
     Product.findById(prodId, product => {
@@ -41,18 +41,16 @@ const postCart = (req,res,next) => {
     res.redirect('/cart')
 }
 
-const getOrders = (req,res,next) => {
+exports.getOrders = (req,res,next) => {
     res.render('shop/orders',{
         path: '/orders',
         pageTitle: 'Your Orders'
     })
 }
 
-const getCheckout = (req,res,next) => {
+exports.getCheckout = (req,res,next) => {
     res.render('shop/checkout',{
         path:'/checkout',
         pageTitle: 'Checkout'
     })
 }
-
-module.exports = { getProducts, getIndex, getCart, getCheckout, getOrders, getProduct, postCart }
