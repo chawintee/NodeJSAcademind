@@ -20,4 +20,6 @@ router.get('/products', adminControllers.getProducts)
 // /admin/add-product => POST
 router.post('/add-product', adminControllers.postAddProduct)
 
+router.post('/edit-product', adminControllers.postEditProduct)
+
 module.exports = router

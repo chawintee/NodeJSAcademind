@@ -24,16 +24,22 @@ const getEditProduct = (req,res,next) => {
     const prodId = req.params.productId
     // console.log({prodId,editMode});
     Product.findById(prodId, product => {
-        if(product){
-            res.render('admin/edit-product', {
-                pageTitle:"Edit Product", 
-                path: "/admin/edit-product",
-                editing: editMode,
-                product,
-                })
+        if(!product){
+            return res.redirect('/')
         }
+        res.render('admin/edit-product', {
+            pageTitle:"Edit Product", 
+            path: "/admin/edit-product",
+            editing: editMode,
+            product,
+            })
     })
 }
+
+const postEditProduct = (req,res,next) => {
+
+}
+
 
 const getProducts = (req,res,next) => {
     Product.fetchAll((products)=>{
@@ -41,4 +47,4 @@ const getProducts = (req,res,next) => {
     })
 }
 
-module.exports = {getAddProduct, postAddProduct, getProducts, getEditProduct}
+module.exports = {getAddProduct, postAddProduct, getProducts, getEditProduct, postEditProduct}
