@@ -2,7 +2,7 @@ const { redirect } = require('express/lib/response')
 const Product = require('../models/product')
 
 const getAddProduct = (req,res,next) => {
-    res.render('admin/edit-product', {pageTitle:"Add Product", path: "/admin/add-product", productsCSS:true, activeAddProducts: true})
+    res.render('admin/edit-product', {pageTitle:"Add Product", path: "/admin/add-product", productsCSS:true, activeAddProducts: true, editing:false})
 }
 
 const postAddProduct = (req,res,next) => {
@@ -17,18 +17,22 @@ const postAddProduct = (req,res,next) => {
 }
 
 const getEditProduct = (req,res,next) => {
-    const productId = req.params.productId
     const editMode = req.query.edit
-    console.log({productId,editMode});
     if(!editMode){
         return res.redirect('/')
     }
-    res.render('admin/edit-product', {
-        pageTitle:"Edit Product", 
-        path: "/admin/edit-product",
-        editing: editMode
+    const prodId = req.params.productId
+    // console.log({prodId,editMode});
+    Product.findById(prodId, product => {
+        if(product){
+            res.render('admin/edit-product', {
+                pageTitle:"Edit Product", 
+                path: "/admin/edit-product",
+                editing: editMode,
+                product,
+                })
         }
-    )
+    })
 }
 
 const getProducts = (req,res,next) => {
