@@ -32,4 +32,23 @@ module.exports = class Cart {
         })
         // Add new product/ increase quantity
     }
+
+    static deleteProduct(id, productPrice){
+        fs.readFile(p, (err,fileContent)=> {
+            if(err){
+                return;
+            }
+            const cart = JSON.parse(fileContent)
+            const updatedCart = {...cart};
+            const product = updatedCart.products.find(prod => prod.id === id)
+            const productQty = product.qty
+            updatedCart.products = updatedCart.products.filter(prod => prod.id !== id)
+            updatedCart.totalPrice = updatedCart.totalPrice - productPrice * productQty
+            fs.writeFile(p, JSON.stringify(updatedCart), err => {
+                if(!err){
+                    console.log(null);
+                }
+            })
+        })
+    }
 }
