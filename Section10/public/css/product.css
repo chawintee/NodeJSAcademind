@@ -27,4 +27,15 @@ button:active {
     background: white;
     border-radius: 3px;
     cursor: pointer;
+    margin: 0rem 0.5rem;
+}
+
+.card__actions {
+    display: inline-flex;
+}
+
+.card {
+    border: 1px solid;
+    margin: 1rem 22rem;
+    padding: 1rem;
 }
