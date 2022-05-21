@@ -1,14 +1,11 @@
-const dotenv = require('dotenv')
 const path = require('path')
-dotenv.config({path:path.join(__dirname,"..",`.env.${process.env.NODE_ENV}`)})
+const dotenv = require('dotenv')
+dotenv.config({path: path.join(__dirname, "..", `.env.${process.env.NODE_ENV}`)})
+const Sequelize = require('sequelize');
 
-const mysql = require('mysql2')
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'node-complete',
-    password: process.env.DATABASE_PASSWORD
-
+const sequelize = new Sequelize('node-complete', 'root', `${process.env.DATABASE_PASSWORD}`, {
+    dialect: 'mysql',
+    host: 'localhost'
 })
 
-module.exports = pool.promise()
+module.exports = sequelize
