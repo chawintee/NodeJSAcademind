@@ -23,15 +23,32 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/admin", adminData);
 app.use(shopRouter);
 
+app.use((req,res,next) => {
+    User.findByPk(1)
+    .then(user=>{
+        req.user = user;
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
+
 app.use(errorController.get404);
 
 Product.belongsTo(User, {cosntraints: true, onDelete: 'CASCADE'})
 
 sequelize
-.sync({force: true})
-// .sync()
+// .sync({force: true})
+.sync()
 .then(result => {
-    // console.log(result);
+    return User.findByPk(1)
+}).then( user => {
+    if(!user){
+        return User.create({name:"Test", email: "test@test.com"})
+    }
+    return user
+}).then(user => {
+    // console.log(user);
     app.listen(3000);
 })
 .catch(err => {
