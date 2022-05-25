@@ -11,16 +11,16 @@ exports.postAddProduct = (req,res,next) => {
     // const price = req?.body?.price;
     // const description = req?.body?.description;
     const {title,imageUrl,price,description} = req?.body
-    Product.create({
-        title,imageUrl,price,description,userId:req.user.id
+    req.user.createProduct({
+        title,imageUrl,price,description
     })
-        .then(result => {
-            // console.log(result);
-            res.redirect('/')
-        })
-        .catch(err => {
-            console.log(err);
-        })
+    .then(result => {
+        // console.log(result);
+        res.redirect('/')
+    })
+    .catch(err => {
+        console.log(err);
+    })
 }
 
 exports.getEditProduct = (req,res,next) => {
