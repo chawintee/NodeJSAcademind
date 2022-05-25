@@ -12,7 +12,7 @@ exports.postAddProduct = (req,res,next) => {
     // const description = req?.body?.description;
     const {title,imageUrl,price,description} = req?.body
     Product.create({
-        title,imageUrl,price,description,
+        title,imageUrl,price,description,userId:req.user.id
     })
         .then(result => {
             // console.log(result);
