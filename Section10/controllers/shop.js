@@ -48,12 +48,12 @@ exports.getCart = (req,res,next) => {
     req.user.getCart()
     .then(cart => {
         return cart.getProducts()
-        .then(product => {
+        .then(products => {
             console.log(product);
             res.render('shop/cart',{
                 path: '/cart',
                 pageTitle: 'Your Cart',
-                products: product
+                products: products
             })
         })
         .catch(err => {
