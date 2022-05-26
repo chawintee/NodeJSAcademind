@@ -45,24 +45,45 @@ exports.getIndex = (req,res,next) => {
 }
 
 exports.getCart = (req,res,next) => {
-    Cart.getCart(cart => {
-        Product.fetchAll(products => {
-            const cartProducts = []
-            if(cart != null){
-                for(product of products){
-                    const cartProductData = cart.products.find(prod => prod.id == product.id)
-                    if(cartProductData){
-                        cartProducts.push({productData: product, qty: cartProductData.qty})
-                    }
-                }
-            }
+    req.user.getCart()
+    .then(cart => {
+        return cart.getProducts()
+        .then(product => {
+            console.log(product);
             res.render('shop/cart',{
                 path: '/cart',
                 pageTitle: 'Your Cart',
-                products: cartProducts
+                products: product
             })
         })
+        .catch(err => {
+            console.log(err)
+        })
+
     })
+    .catch(err=> {
+        console.log(err)
+    })
+  
+
+    // Cart.getCart(cart => {
+    //     Product.fetchAll(products => {
+    //         const cartProducts = []
+    //         if(cart != null){
+    //             for(product of products){
+    //                 const cartProductData = cart.products.find(prod => prod.id == product.id)
+    //                 if(cartProductData){
+    //                     cartProducts.push({productData: product, qty: cartProductData.qty})
+    //                 }
+    //             }
+    //         }
+    //         res.render('shop/cart',{
+    //             path: '/cart',
+    //             pageTitle: 'Your Cart',
+    //             products: cartProducts
+    //         })
+    //     })
+    // })
 }
 
 exports.postCart = (req,res,next) => {
