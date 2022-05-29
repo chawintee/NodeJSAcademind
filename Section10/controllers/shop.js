@@ -25,7 +25,7 @@ exports.getProduct = (req,res,next) => {
 
     Product.findByPk(prodId)
     .then(product => {
-        console.log(product);
+        // console.log(product);
         res.render('shop/product-detail', {product:product, pageTitle: product.title, path: "/products"})
     })
     .catch(err=> {
@@ -70,28 +70,28 @@ exports.getCart = (req,res,next) => {
 exports.postCart = (req,res,next) => {
     const prodId = req.body.productId
     let fetchedCart
+    let newQuantity = 1 ;
     req.user.getCart()
     .then(cart => {
-        console.log("$$$", cart);
+        // console.log("$$$", cart);
         fetchedCart = cart
         return cart.getProducts({where :{id: prodId}})
     })
     .then(products => {
-        console.log("***",products);
+        // console.log("***",products);
         let product;
         if(products.length > 0){
             product = products[0]
         }
-        let newQuantity = 1 ;
         if(product){
-            //..
+            const oldQuantity = product.cartItem.quantity
+            newQuantity = oldQuantity +1
+            return product
         }
         return Product.findByPk(prodId)
-            .then(product => {
-                console.log("###", product);
-                return fetchedCart.addProduct(product, {through : {quantity :newQuantity}})
-            })
-            .catch(err => {console.log(err)})
+    })
+    .then(product => {
+    return fetchedCart.addProduct(product, {through : {quantity :newQuantity}})
     })
     .then(()=>{
         res.redirect('/cart')
@@ -103,7 +103,7 @@ exports.postCart = (req,res,next) => {
 
 exports.postCartDeleteProduct = (req,res,next) => {
     const prodId = req.body.productId
-    console.log({prodId});
+    // console.log({prodId});
     Product.findById(prodId, product => {
         Cart.deleteProduct(prodId, product.price)
     })

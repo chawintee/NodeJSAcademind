@@ -1,0 +1,19 @@
+.card-cart {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border: solid 2px gray ;
+    margin: 0.5rem 10rem;
+}
+
+form .btn {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    margin: 1rem;
+}
+
+.card-cart p {
+    display: flex;
+    margin: 1rem 3rem;
+}
