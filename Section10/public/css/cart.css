@@ -17,3 +17,9 @@ form .btn {
     display: flex;
     margin: 1rem 3rem;
 }
+
+.centered {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
