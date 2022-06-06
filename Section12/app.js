@@ -8,7 +8,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-const mongoConnect = require('./util/database')
+const mongoConnect = require('./util/database').mongoConnect;
 
 
 const adminData = require("./routes/admin");

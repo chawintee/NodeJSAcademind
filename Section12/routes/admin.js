@@ -12,7 +12,7 @@ const adminControllers = require('../controllers/admin')
 router.get('/add-product', adminControllers.getAddProduct)
 
 // /admin/edit-product => GET
-router.get('/edit-product/:productId', adminControllers.getEditProduct)
+// router.get('/edit-product/:productId', adminControllers.getEditProduct)
 
 // /admin/products => GET
 router.get('/products', adminControllers.getProducts)
@@ -20,8 +20,8 @@ router.get('/products', adminControllers.getProducts)
 // /admin/add-product => POST
 router.post('/add-product', adminControllers.postAddProduct)
 
-router.post('/edit-product', adminControllers.postEditProduct)
+// router.post('/edit-product', adminControllers.postEditProduct)
 
-router.post('/delete-product', adminControllers.postDeleteProduct)
+// router.post('/delete-product', adminControllers.postDeleteProduct)
 
 module.exports = router
