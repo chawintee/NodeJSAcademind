@@ -11,14 +11,14 @@ app.set("views", "views");
 const mongoConnect = require('./util/database')
 
 
-// const adminData = require("./routes/admin");
+const adminData = require("./routes/admin");
 // const shopRouter = require("./routes/shop");
 const errorController = require("./controllers/error");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use("/admin", adminData);
+app.use("/admin", adminData);
 // app.use(shopRouter);
 
 
