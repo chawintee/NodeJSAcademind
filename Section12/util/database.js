@@ -6,7 +6,7 @@ let _db
 const mongoConnect = (callback) => {
     mongoClient.connect('mongodb://root:123456@localhost:27017/?authSource=admin')
     .then(client => {
-        _db = client.db()
+        _db = client.db('shop')
         console.log('Connected !!');
         return callback(client)
     })
