@@ -10,18 +10,18 @@ router.get('/', shopControllers.getIndex)
 
 router.get('/products', shopControllers.getProducts)
 
-router.get('/product/:productId',shopControllers.getProduct)
+// router.get('/product/:productId',shopControllers.getProduct)
 
-router.get('/cart', shopControllers.getCart)
+// router.get('/cart', shopControllers.getCart)
 
-router.post('/cart', shopControllers.postCart)
+// router.post('/cart', shopControllers.postCart)
 
-router.post('/cart-delete-item', shopControllers.postCartDeleteProduct)
+// router.post('/cart-delete-item', shopControllers.postCartDeleteProduct)
 
-router.post('/create-order',shopControllers.postOrder)
+// router.post('/create-order',shopControllers.postOrder)
 
-router.get('/orders', shopControllers.getOrders)
+// router.get('/orders', shopControllers.getOrders)
 
-router.get('/checkout', shopControllers.getCheckout)
+// router.get('/checkout', shopControllers.getCheckout)
 
 module.exports = router
