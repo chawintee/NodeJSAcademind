@@ -7,11 +7,10 @@ class Product {
     this.price = price,
     this.imageUrl = imangeUrl,
     this.description = description,
-    this._id = new mongodb.ObjectId(id);
+    this._id = id ? new mongodb.ObjectId(id) : null;
   }
 
   save() {
-    console.log("******************************************************************************************",this._id);
     const db = getDb();
     let dbOps;
     if (this._id) {
