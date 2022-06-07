@@ -1,5 +1,7 @@
 const { redirect } = require("express/lib/response");
 const Product = require("../models/product");
+const mongodb = require('mongodb')
+const ObjectId = mongodb.ObjectId
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -62,15 +64,8 @@ exports.postEditProduct = (req, res, next) => {
     description: updatedDesc,
   } = req.body;
   // console.log({prodId, updatedTitle, updatedImageUrl, updatedDesc, updatedPrice});
-  Product.findByPk(prodId)
-    .then((product) => {
-      product.id = prodId;
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.imageUrl = updatedImageUrl;
-      product.description = updatedDesc;
-      return product.save();
-    })
+  const product = new Product(updatedTitle,updatedPrice,updatedImageUrl,updatedDesc, new ObjectId(prodId))
+  product.save()
     .then((result) => {
       // console.log(result);
       console.log("UPDATED PRODUCT!");
