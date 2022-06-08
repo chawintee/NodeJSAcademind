@@ -6,7 +6,7 @@ class User {
     constructor(username, email, cart,id){
         this.name = username,
         this.email = email, 
-        this.cart = cart, // {item: []}
+        this.cart = cart, // {items: []}
         this._id = id
     }
 
@@ -16,19 +16,25 @@ class User {
     }
 
     addToCart(product){
-        // const cartProduct = this.cart.item.findIndex(cp => {
-        //     return cp._id === product._id
-        // })
-        console.log({product});
+        const cartProductIndex = this?.cart?.items?.findIndex(cp => {
+            return cp.productId.toString() === product._id.toString()
+        })
+        let newQuatity = 1
+        const updatedCartItems = this?.cart?.items ? [...this.cart.items] : []
+        if(cartProductIndex >= 0){
+            newQuatity = this.cart.items[cartProductIndex].quantity + 1
+            updatedCartItems[cartProductIndex].quantity = newQuatity
+        }else{
+            updatedCartItems.push({productId : new ObjectId(product?._id), quantity: newQuatity})
+        }
         const db = getDb();
-        const updatedCart = {item :[{productId : new ObjectId(product?._id), quantity: 1}]}
+        const updatedCart = {items :updatedCartItems}
         return db
         .collection('users')
         .updateOne(
             {_id: new ObjectId(this._id)}, 
             {$set: {cart : updatedCart}}
             )
-        
     }
 
     static findById(userId){
