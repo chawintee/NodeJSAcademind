@@ -22,7 +22,12 @@ class User {
 
         const db = getDb();
         const updatedCart = {item :[{...product, quantity: 1}]}
-        return db.collection('users').updateOne({_id: ObjectId(this.id)}, {$set:{updatedCart}})
+        return db
+        .collection('users')
+        .updateOne(
+            {_id: ObjectId(this.id)}, 
+            {$set:{updatedCart}}
+            )
         
     }
 
