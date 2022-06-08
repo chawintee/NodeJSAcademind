@@ -10,11 +10,7 @@ class User {
 
     save(){
         const db = getDb();
-        return db
-        .collection('users')
-        .insertOne(this)
-        .then()
-        .catch(err => console.log(err))
+        return db.collection('users').insertOne(this)
 
     }
 
