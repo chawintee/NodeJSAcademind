@@ -14,7 +14,7 @@ router.get('/product/:productId',shopControllers.getProduct)
 
 // router.get('/cart', shopControllers.getCart)
 
-// router.post('/cart', shopControllers.postCart)
+router.post('/cart', shopControllers.postCart)
 
 // router.post('/cart-delete-item', shopControllers.postCartDeleteProduct)
 

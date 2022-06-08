@@ -19,14 +19,14 @@ class User {
         // const cartProduct = this.cart.item.findIndex(cp => {
         //     return cp._id === product._id
         // })
-
+        console.log({product});
         const db = getDb();
-        const updatedCart = {item :[{...product, quantity: 1}]}
+        const updatedCart = {item :[{productId : new ObjectId(product?._id), quantity: 1}]}
         return db
         .collection('users')
         .updateOne(
-            {_id: ObjectId(this.id)}, 
-            {$set:{updatedCart}}
+            {_id: new ObjectId(this._id)}, 
+            {$set: {cart : updatedCart}}
             )
         
     }
