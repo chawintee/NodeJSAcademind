@@ -1,5 +1,5 @@
 const getDb = require('../util/database').getDb;
-const mongodb = require('mongodb')
+const mongodb = require('mongodb');
 const ObjectId = mongodb.ObjectId
 
 class User {
@@ -64,6 +64,11 @@ class User {
             console.log(err)
         })
         
+    }
+
+    getOrders(){
+        const db = getDb()
+        return db.collection('orders').find({'user._id': new ObjectId(this._id)}).toArray()
     }
 
     deleteItemFromCart(productId){
