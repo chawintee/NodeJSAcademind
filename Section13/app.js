@@ -8,7 +8,8 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-const mongoConnect = require('./util/database').mongoConnect;
+// const mongoConnect = require('./util/database').mongoConnect;
+const mongoose = require('mongoose')
 
 
 const adminData = require("./routes/admin");
@@ -38,7 +39,15 @@ app.use(shopRouter);
 
 app.use(errorController.get404);
 
-mongoConnect(client => {
-    // console.log(client);
-    app.listen(3000);
+// mongoConnect(client => {
+//     // console.log(client);
+//     app.listen(3000);
+// })
+
+const dotenv = require('dotenv')
+dotenv.config({path: path.join(__dirname, `.env.${process.env.NODE_ENV}` )})
+
+mongoose.connect(`mongodb://root:123456@localhost:27017/?authSource=admin`).then( result => {
+    console.log("mongoDB connected");
+    app.listen(3000)
 })
