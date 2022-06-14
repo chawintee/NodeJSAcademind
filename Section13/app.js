@@ -47,7 +47,8 @@ app.use(errorController.get404);
 const dotenv = require('dotenv')
 dotenv.config({path: path.join(__dirname, `.env.${process.env.NODE_ENV}` )})
 
-mongoose.connect(`mongodb://root:123456@localhost:27017/?authSource=admin`)
+
+mongoose.connect(`${process.env.MONGODB_URL}`)
 .then( result => {
     console.log("mongoDB connected");
     app.listen(3000)
