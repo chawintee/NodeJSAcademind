@@ -21,17 +21,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const User = require('./models/user')
 
-app.use((req,res,next)=> {
-    User.findById("629ff16fb0f2b334b4328816")
-    .then(user => {
-        console.log(user);
-        req.user = new User(user.name, user.email, user.cart, user._id)
-        next()
-    })
-    .catch(err => {
-        console.log(err)
-    })
-})
+// app.use((req,res,next)=> {
+//     User.findById("629ff16fb0f2b334b4328816")
+//     .then(user => {
+//         console.log(user);
+//         req.user = new User(user.name, user.email, user.cart, user._id)
+//         next()
+//     })
+//     .catch(err => {
+//         console.log(err)
+//     })
+// })
 
 app.use("/admin", adminData);
 app.use(shopRouter);
