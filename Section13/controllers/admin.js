@@ -1,4 +1,5 @@
 const { redirect } = require("express/lib/response");
+const product = require("../models/product");
 const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
@@ -62,16 +63,21 @@ exports.postEditProduct = (req, res, next) => {
     description: updatedDesc,
   } = req.body;
   // console.log({prodId, updatedTitle, updatedImageUrl, updatedDesc, updatedPrice});
-  const product = new Product(updatedTitle,updatedPrice,updatedImageUrl,updatedDesc, prodId)
-  product.save()
-    .then((result) => {
-      // console.log(result);
-      console.log("UPDATED PRODUCT!");
-      res.redirect("/admin/products");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  product.findById(prodId).then(product => {
+    product.title = updatedTitle;
+    product.price = updatedPrice;
+    product.imageUrl = updatedImageUrl;
+    product.description = updatedDesc;
+    return product.save()
+  })
+  .then((result) => {
+    // console.log(result);
+    console.log("UPDATED PRODUCT!");
+    res.redirect("/admin/products");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
