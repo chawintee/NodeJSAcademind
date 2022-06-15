@@ -1,3 +1,35 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  cart: {
+    items: [
+      {
+        productId: { type: Schema.Types.ObjectId, required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+  },
+});
+
+module.exports = mongoose.model('User', userSchema)
+
+
+
+
+
+
+
+
+
 // const getDb = require('../util/database').getDb;
 // const mongodb = require('mongodb');
 // const ObjectId = mongodb.ObjectId
@@ -5,7 +37,7 @@
 // class User {
 //     constructor(username, email, cart,id){
 //         this.name = username,
-//         this.email = email, 
+//         this.email = email,
 //         this.cart = cart, // {items: []}
 //         this._id = id
 //     }
@@ -32,7 +64,7 @@
 //         return db
 //         .collection('users')
 //         .updateOne(
-//             {_id: new ObjectId(this._id)}, 
+//             {_id: new ObjectId(this._id)},
 //             {$set: {cart : updatedCart}}
 //             )
 //     }
@@ -63,7 +95,7 @@
 //         .catch(err => {
 //             console.log(err)
 //         })
-        
+
 //     }
 
 //     getOrders(){

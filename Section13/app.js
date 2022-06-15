@@ -21,17 +21,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const User = require('./models/user')
 
-// app.use((req,res,next)=> {
-//     User.findById("629ff16fb0f2b334b4328816")
-//     .then(user => {
-//         console.log(user);
-//         req.user = new User(user.name, user.email, user.cart, user._id)
-//         next()
-//     })
-//     .catch(err => {
-//         console.log(err)
-//     })
-// })
+app.use((req,res,next)=> {
+    User.findById("62aa0c353b983778483beec6")
+    .then(user => {
+        console.log(user);
+        req.user = user
+        next()
+    })
+    .catch(err => {
+        console.log(err)
+    })
+})
 
 app.use("/admin", adminData);
 app.use(shopRouter);
@@ -51,6 +51,17 @@ dotenv.config({path: path.join(__dirname, `.env.${process.env.NODE_ENV}` )})
 mongoose.connect(`${process.env.MONGODB_URL}`)
 .then( result => {
     console.log("mongoDB connected");
+    User.findOne().then(user => {
+        if(!user){
+            const user = new User({
+                name: 'Max',
+                email : 'max@test.co.th',
+                cart : {items : []}
+            })
+            user.save()
+            console.log("User created");
+        }
+    })
     app.listen(3000)
 })
 .catch(err => {
