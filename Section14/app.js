@@ -12,8 +12,10 @@ app.set("views", "views");
 const mongoose = require('mongoose')
 
 
-const adminData = require("./routes/admin");
-const shopRouter = require("./routes/shop");
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+const authRoutes = require("./routes/auth")
+
 const errorController = require("./controllers/error");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,8 +35,9 @@ app.use((req,res,next)=> {
     })
 })
 
-app.use("/admin", adminData);
-app.use(shopRouter);
+app.use("/admin", adminRoutes);
+app.use(shopRoutes);
+app.use(authRoutes)
 
 
 app.use(errorController.get404);
