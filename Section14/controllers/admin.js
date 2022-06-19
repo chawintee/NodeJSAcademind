@@ -9,6 +9,7 @@ exports.getAddProduct = (req, res, next) => {
     productsCSS: true,
     activeAddProducts: true,
     editing: false,
+    isAuthenticated: req.isLoggedIn
   });
 };
 
@@ -47,6 +48,7 @@ exports.getEditProduct = (req, res, next) => {
         path: "/admin/edit-product",
         editing: editMode,
         product,
+        isAuthenticated: req.isLoggedIn
       });
     })
     .catch((err) => {
@@ -105,6 +107,7 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: "Admin Prodcuts",
         path: "/admin/products",
+        isAuthenticated: req.isLoggedIn
       });
     })
     .catch(err => {
