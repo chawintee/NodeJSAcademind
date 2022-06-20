@@ -1,10 +1,19 @@
 const path = require("path");
 
+const dotenv = require('dotenv')
+dotenv.config({path: path.join(__dirname, `.env.${process.env.NODE_ENV}` )})
+
 const express = require("express");
 const bodyParser = require("body-parser");
-const session = require("express-session")
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+
+
 
 const app = express();
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URL
+});
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -21,7 +30,7 @@ const errorController = require("./controllers/error");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(session({secret:"my secret", resave: false, saveUninitialized:false}))
+app.use(session({secret:"my secret", resave: false, saveUninitialized:false, store: store}))
 
 const User = require('./models/user')
 
@@ -49,8 +58,6 @@ app.use(errorController.get404);
 //     app.listen(3000);
 // })
 
-const dotenv = require('dotenv')
-dotenv.config({path: path.join(__dirname, `.env.${process.env.NODE_ENV}` )})
 
 
 mongoose.connect(`${process.env.MONGODB_URL}`)
