@@ -34,19 +34,6 @@ app.use(session({secret:"my secret", resave: false, saveUninitialized:false, sto
 
 const User = require('./models/user')
 
-app.use((req,res,next)=> {
-    // User.findById(`${req.session.user}`)
-    User.findById(`62aa0c353b983778483beec6`)
-    .then(user => {
-        // console.log(user);
-        req.user = user
-        next()
-    })
-    .catch(err => {
-        console.log(err)
-    })
-})
-
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes)
