@@ -35,10 +35,11 @@ app.use(session({secret:"my secret", resave: false, saveUninitialized:false, sto
 const User = require('./models/user')
 
 app.use((req,res,next)=> {
-    if(!req.session.user){
-        next();
+    // console.log("***************************************************************",req.session.user);
+    if(!req?.session?.user){
+        return next();
     }
-    User.findById(req.session.user)
+    User.findById(req.session.user._id)
     .then(user => {
         // console.log(user);
         req.user = user;
