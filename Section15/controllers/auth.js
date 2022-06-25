@@ -11,6 +11,14 @@ exports.getLogin = (req,res,next) => {
     })
 }
 
+exports.getSignup = (req,res,next) => {
+    res.render('auth/signup', {
+        path: '/singup',
+        pageTitle: 'Signup', 
+        isAuthenticated: req.session.isLoggedIn
+    })
+}
+
 exports.postLogin = (req,res,next) => {
     User.findById(`62aa0c353b983778483beec6`)
     .then(user => {
@@ -26,6 +34,22 @@ exports.postLogin = (req,res,next) => {
         console.log(err)
     })
 }
+
+exports.postSignup = (req,res,next) => {
+    try {
+        console.log('PostSignUp');
+        console.log(req?.body);
+        const {email, password,confirmPassword} = req?.body
+        
+        return res.redirect('/')
+    } catch (error) {
+        
+    }
+
+
+}
+
+
 
 exports.postLogout = (req,res,next) => {
     req.session.destroy((err)=>{
