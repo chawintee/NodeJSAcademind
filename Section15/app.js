@@ -67,17 +67,17 @@ app.use(errorController.get404);
 mongoose.connect(`${process.env.MONGODB_URL}`)
 .then( result => {
     console.log("mongoDB connected");
-    User.findOne().then(user => {
-        if(!user){
-            const user = new User({
-                name: 'Max',
-                email : 'max@test.co.th',
-                cart : {items : []}
-            })
-            user.save()
-            console.log("User created");
-        }
-    })
+    // User.findOne().then(user => {
+    //     if(!user){
+    //         const user = new User({
+    //             name: 'Max',
+    //             email : 'max@test.co.th',
+    //             cart : {items : []}
+    //         })
+    //         user.save()
+    //         console.log("User created");
+    //     }
+    // })
     app.listen(3000)
 })
 .catch(err => {

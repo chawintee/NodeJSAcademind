@@ -37,16 +37,30 @@ exports.postLogin = (req,res,next) => {
 
 exports.postSignup = (req,res,next) => {
     try {
-        console.log('PostSignUp');
-        console.log(req?.body);
+        // console.log('PostSignUp');
+        // console.log(req?.body);
         const {email, password,confirmPassword} = req?.body
-        
-        return res.redirect('/')
+        User.findOne({email})
+        .then(userDoc => {
+            if(userDoc){
+                return res.redirect('/signup')
+            }
+            const user = new User({
+                email: email,
+                password: password, 
+                cart : {item : []}
+            })
+            return user.save()
+        }).then(result => {
+            res.redirect(301,'/login')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        // return res.redirect('/') if open make error
     } catch (error) {
-        
+        console.log(error);
     }
-
-
 }
 
 
