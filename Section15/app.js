@@ -7,7 +7,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-
+const csrf = require('csurf')
+const csrfProtection = csrf();
 
 
 const app = express();
@@ -31,6 +32,7 @@ const errorController = require("./controllers/error");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(session({secret:"my secret", resave: false, saveUninitialized:false, store: store}))
+// app.use(csrfProtection)
 
 const User = require('./models/user')
 
