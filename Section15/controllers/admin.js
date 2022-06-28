@@ -1,11 +1,6 @@
-const { redirect } = require("express/lib/response");
-const product = require("../models/product");
 const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
-  if(!req?.session?.user){
-    res.redirect('/login')
-  }
   res.render("admin/edit-product", {
     pageTitle: "Add Product",
     path: "/admin/add-product",
@@ -69,7 +64,7 @@ exports.postEditProduct = (req, res, next) => {
     description: updatedDesc,
   } = req.body;
   // console.log({prodId, updatedTitle, updatedImageUrl, updatedDesc, updatedPrice});
-  product.findById(prodId).then(product => {
+  Product.findById(prodId).then(product => {
     product.title = updatedTitle;
     product.price = updatedPrice;
     product.imageUrl = updatedImageUrl;
