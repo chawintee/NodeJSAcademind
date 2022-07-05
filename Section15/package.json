@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/csurf": "^1.11.2",
     "nodemon": "^2.0.16"
   },
   "dependencies": {
