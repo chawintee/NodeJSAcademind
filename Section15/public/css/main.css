@@ -66,3 +66,19 @@ button:active {
     color: white;
 
 }
+
+.user-message {
+    margin: auto;
+    width: 90%;
+    border: 1px solid rgb(24, 132, 255);
+    padding: 0.5rem;
+    border-radius: 3px;
+    background: rgb(75, 183, 255);
+    text-align: center;
+}
+
+.user-message--error {
+    border-color: red;
+    background: rgb(255, 156, 156);
+
+}
