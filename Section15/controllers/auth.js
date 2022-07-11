@@ -1,4 +1,18 @@
+const path = require("path");
+
+const dotenv = require('dotenv')
+dotenv.config({path: path.resolve(__dirname ,'..', `.env.${process.env.NODE_ENV}` )})
+
 const bcrypt = require('bcryptjs')
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
+const mailer = nodemailer.createTransport(sendgridTransport({
+     auth : {
+        api_key: `${process.env.API_KEY}`
+     }
+}))
+
+const crypto = require('crypto')
 
 const User = require('../models/user')
 
@@ -89,6 +103,15 @@ exports.postSignup = (req,res,next) => {
             })
             .then(result => {
                 res.redirect(301,'/login')
+                return mailer.sendMail({
+                    to: email,
+                    from: 'chocolate_co_@hotmail.com',
+                    subject: 'Singup succeeded!',
+                    html : '<h1>You successfully signed up! </h1>'
+                })
+            })
+            .catch(err => {
+                console.log(err);
             })
         })
         .catch(err => {
@@ -107,4 +130,54 @@ exports.postLogout = (req,res,next) => {
         console.log(err);
         res.redirect('/')
     })
+}
+
+
+exports.getReset = (req,res,next) => {
+    let message = req.flash('error');
+    if(message.length > 0){
+        message = message[0];
+    }else{
+        message = null;
+    }
+    res.render('auth/reset', {
+        path: '/reset',
+        pageTitle: 'Reset Password',
+        errorMessage: message
+    })
+}
+
+exports.postReset = (req,res,next) => {
+    crypto.randomBytes(32, (err, buffer) => {
+        if(err){
+            console.log(err);
+            return res.redirect('/reset');
+        }
+        const token = buffer.toString('hex');
+        User.findOne({email: req.body.email})
+        .then(user => {
+            if(!user){
+                req.flash('error', 'No account with that email found.')
+                return res.redirect('/reset');
+            }
+            user.resetToken = token;
+            user.resetTokenExpiration = Date.now() + 3600000;
+            return user.save()
+        })
+        .then(result => {
+            mailer.sendMail({
+                to: req.body.email,
+                from: 'chocolate_co_@hotmail.com',
+                subject: 'Password reset',
+                html : `
+                 <p>You requested a password reset </p>
+                 <p>Click this <a href="http://localhost:3000/reset/${token}>link</p> to set a new password </p>
+                `
+            })
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    })
+
 }
