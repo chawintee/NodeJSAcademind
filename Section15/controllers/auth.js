@@ -12,6 +12,8 @@ const mailer = nodemailer.createTransport(sendgridTransport({
      }
 }))
 
+const { validationResult } = require('express-validator')
+
 const crypto = require('crypto')
 
 const User = require('../models/user')
@@ -85,6 +87,15 @@ exports.postSignup = (req,res,next) => {
         // console.log('PostSignUp');
         // console.log(req?.body);
         const {email, password,confirmPassword} = req?.body
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            console.log(errors.array());
+            return res.status(422).render('auth/signup', {
+                path: '/singup',
+                pageTitle: 'Signup',
+                errorMessage: errors.array()
+            })
+        }
         User.findOne({email})
         .then(userDoc => {
             if(userDoc){
@@ -101,15 +112,15 @@ exports.postSignup = (req,res,next) => {
                 })
                 return user.save()
             })
-            .then(result => {
-                res.redirect(301,'/login')
-                return mailer.sendMail({
-                    to: email,
-                    from: 'chocolate_co_@hotmail.com',
-                    subject: 'Singup succeeded!',
-                    html : '<h1>You successfully signed up! </h1>'
-                })
-            })
+            // .then(result => {
+            //     res.redirect(301,'/login')
+            //     return mailer.sendMail({
+            //         to: email,
+            //         from: 'chocolate_co_@hotmail.com',
+            //         subject: 'Singup succeeded!',
+            //         html : '<h1>You successfully signed up! </h1>'
+            //     })
+            // })
             .catch(err => {
                 console.log(err);
             })
