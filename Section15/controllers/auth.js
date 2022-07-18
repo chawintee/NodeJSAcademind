@@ -112,18 +112,18 @@ exports.postSignup = (req,res,next) => {
                 })
                 return user.save()
             })
-            // .then(result => {
-            //     res.redirect(301,'/login')
-            //     return mailer.sendMail({
-            //         to: email,
-            //         from: 'chocolate_co_@hotmail.com',
-            //         subject: 'Singup succeeded!',
-            //         html : '<h1>You successfully signed up! </h1>'
-            //     })
-            // })
-            .catch(err => {
-                console.log(err);
+            .then(result => {
+                res.redirect(301,'/login')
+                // return mailer.sendMail({
+                //     to: email,
+                //     from: 'chocolate_co_@hotmail.com',
+                //     subject: 'Singup succeeded!',
+                //     html : '<h1>You successfully signed up! </h1>'
+                // })
             })
+            // .catch(err => {
+            //     console.log(err);
+            // })
         })
         .catch(err => {
             console.log(err)
