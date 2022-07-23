@@ -7,6 +7,8 @@ const express = require('express')
 const router = express.Router()
 
 const isAuth = require('../middlewear/is-auth')
+const {body} = require('express-validator')
+
 
 const adminControllers = require('../controllers/admin')
 
@@ -20,7 +22,16 @@ router.get('/edit-product/:productId', isAuth, adminControllers.getEditProduct)
 router.get('/products', isAuth, adminControllers.getProducts)
 
 // /admin/add-product => POST
-router.post('/add-product', isAuth, adminControllers.postAddProduct)
+router.post(
+    '/add-product', 
+    [
+        body('title').isString().isLength({min:3}),
+        body('imageUrl').isURL(),
+        body('price').isFloat(),
+        body('description').isString().isLength({min:8}),
+    ]
+    ,  isAuth
+    , adminControllers.postAddProduct)
 
 router.post('/edit-product', isAuth, adminControllers.postEditProduct)
 
