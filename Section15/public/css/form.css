@@ -22,3 +22,7 @@
 .form-control textarea {
     outline-color: #00695c;
 }
+
+.login-form .form-control .invalid {
+    border: 2px solid red;
+}

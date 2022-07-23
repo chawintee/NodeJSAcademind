@@ -36,7 +36,8 @@ exports.getLogin = (req,res,next) => {
         oldInput : {
             email: '',
             password: ''
-        }
+        },
+        validationErrors: []
     })
 }
 
@@ -55,7 +56,8 @@ exports.getSignup = (req,res,next) => {
             email: '',
             password: '',
             confirmPassword: '',
-        }
+        },
+        validationErrors: []
     })
 }
 
@@ -71,7 +73,8 @@ exports.postLogin = (req,res,next) => {
             oldInput: {
                 email,
                 password
-            }
+            },
+            validationErrors : errors.array()
         })
     }
     User.findOne({email})
@@ -110,7 +113,7 @@ exports.postSignup = (req,res,next) => {
         const {email, password,confirmPassword} = req?.body
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            console.log(errors.array());
+            // console.log(errors.array());
             return res.status(422).render('auth/signup', {
                 path: '/singup',
                 pageTitle: 'Signup',
@@ -119,7 +122,8 @@ exports.postSignup = (req,res,next) => {
                     email,
                     password,
                     confirmPassword,
-                }
+                },
+                validationErrors: errors.array()
             })
         }
 
