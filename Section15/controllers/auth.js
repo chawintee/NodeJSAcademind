@@ -32,7 +32,11 @@ exports.getLogin = (req,res,next) => {
     res.render('auth/login', {
         path: '/login',
         pageTitle: 'Login',
-        errorMessage: message
+        errorMessage: message,
+        oldInput : {
+            email: '',
+            password: ''
+        }
     })
 }
 
@@ -46,7 +50,12 @@ exports.getSignup = (req,res,next) => {
     res.render('auth/signup', {
         path: '/singup',
         pageTitle: 'Signup',
-        errorMessage: message
+        errorMessage: message,
+        oldInput: {
+            email: '',
+            password: '',
+            confirmPassword: '',
+        }
     })
 }
 
@@ -58,7 +67,11 @@ exports.postLogin = (req,res,next) => {
         return res.status(422).render('auth/login', {
             path: '/login',
             pageTitle: 'Login',
-            errorMessage: errors.array()[0].msg
+            errorMessage: errors.array()[0].msg,
+            oldInput: {
+                email,
+                password
+            }
         })
     }
     User.findOne({email})
@@ -101,7 +114,12 @@ exports.postSignup = (req,res,next) => {
             return res.status(422).render('auth/signup', {
                 path: '/singup',
                 pageTitle: 'Signup',
-                errorMessage: errors.array()[0].msg
+                errorMessage: errors.array()[0].msg,
+                oldInput: {
+                    email,
+                    password,
+                    confirmPassword,
+                }
             })
         }
 
