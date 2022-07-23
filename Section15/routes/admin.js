@@ -25,15 +25,24 @@ router.get('/products', isAuth, adminControllers.getProducts)
 router.post(
     '/add-product', 
     [
-        body('title').isString().isLength({min:3}),
-        body('imageUrl').isURL(),
-        body('price').isFloat(),
-        body('description').isString().isLength({min:8}),
-    ]
-    ,  isAuth
-    , adminControllers.postAddProduct)
+        body('title').isString().isLength({min:3}).trim(),
+        body('imageUrl').isURL().trim(),
+        body('price').isFloat().trim(),
+        body('description').isString().isLength({min:8}).trim(),
+    ],
+    isAuth,
+    adminControllers.postAddProduct)
 
-router.post('/edit-product', isAuth, adminControllers.postEditProduct)
+router.post(
+    '/edit-product',
+    [
+        body('title').isString().isLength({min:3}).trim(),
+        body('imageUrl').isURL().trim(),
+        body('price').isFloat().trim(),
+        body('description').isString().isLength({min:8}).trim(),
+    ],
+    isAuth,
+    adminControllers.postEditProduct)
 
 router.post('/delete-product', isAuth, adminControllers.postDeleteProduct)
 
