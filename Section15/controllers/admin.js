@@ -39,7 +39,9 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
   const _id = new mongoose.Types.ObjectId("62db7b211ff3cc2061c7a76a")
-  const product = new Product({_id, title, price, imageUrl, description, userId : req.user});
+  const product = new Product({
+    // _id,
+     title, price, imageUrl, description, userId : req.user});
   product
     .save()
     .then((result) => {
@@ -78,7 +80,7 @@ exports.getEditProduct = (req, res, next) => {
       if (!product) {
         return res.redirect("/");
       }
-      throw Error('Dummy')
+      // throw Error('Dummy')
       res.render("admin/edit-product", {
         pageTitle: "Edit Product",
         path: "/admin/edit-product",
@@ -146,6 +148,9 @@ exports.postEditProduct = (req, res, next) => {
   })
   .catch((err) => {
     console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   });
 };
 
@@ -159,6 +164,9 @@ exports.postDeleteProduct = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
   // Product.deleteById(prodId)
   // res.redirect('/admin/products')
@@ -176,7 +184,10 @@ exports.getProducts = (req, res, next) => {
         path: "/admin/products"
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
