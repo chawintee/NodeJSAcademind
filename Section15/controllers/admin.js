@@ -60,7 +60,9 @@ exports.postAddProduct = (req, res, next) => {
       //   validationError : []
       // });
       console.log(err);
-      res.redirect('/500')
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -76,6 +78,7 @@ exports.getEditProduct = (req, res, next) => {
       if (!product) {
         return res.redirect("/");
       }
+      throw Error('Dummy')
       res.render("admin/edit-product", {
         pageTitle: "Edit Product",
         path: "/admin/edit-product",
@@ -88,6 +91,9 @@ exports.getEditProduct = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
