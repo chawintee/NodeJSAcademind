@@ -22,7 +22,9 @@ exports.postAddProduct = (req, res, next) => {
   // const price = req?.body?.price;
   // const description = req?.body?.description;
   console.log('user',req.user);
-  const { title, image:imageUrl, price, description } = req?.body;
+  // const { title, image:imageUrl, price, description } = req?.body;
+  const { title, price, description } = req?.body;
+  const imageUrl = req?.file
   console.log(imageUrl);
   const errors = validationResult(req);
   if(!errors.isEmpty()){
