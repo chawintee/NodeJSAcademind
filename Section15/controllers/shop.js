@@ -6,6 +6,8 @@ const Order = require('../models/order');
 const user = require('../models/user');
 const product = require('../models/product');
 
+const PDFDocument = require('pdfkit')
+
 
 exports.getProducts = (req,res,next) => {
     Product.find()
@@ -218,6 +220,8 @@ exports.getInvoice = (req,res,next) => {
         }
         const invoiceName = "invoice-" + orderId + ".pdf";
         const invoicePath = path.join('data','invoices', invoiceName);
+
+        //1
         // fs.readFile(invoicePath, (err, data)=> {
         //     if(err){
         //         return next(err);
@@ -226,10 +230,21 @@ exports.getInvoice = (req,res,next) => {
         //     res.setHeader('Content-Disposition', `inline ; filename="${invoiceName}" `);
         //     res.send(data);
         // })
-        const file = fs.createReadStream(invoicePath)
-            res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', `inline ; filename="${invoiceName}" `);
-        file.pipe(res)
+
+        //2
+        // const file = fs.createReadStream(invoicePath)
+        //     res.setHeader('Content-Type', 'application/pdf');
+        //     res.setHeader('Content-Disposition', `inline ; filename="${invoiceName}" `);
+        // file.pipe(res)
+
+        //3
+        const pdfDoc = new PDFDocument();
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `inline ; filename="${invoiceName}" `);
+        pdfDoc.pipe(fs.createWriteStream(invoicePath));
+        pdfDoc.pipe(res);
+        pdfDoc.text('Hello world!');
+        pdfDoc.end()
     })
     .catch(err => next(err))
 }
