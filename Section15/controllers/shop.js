@@ -8,13 +8,13 @@ const product = require('../models/product');
 
 const PDFDocument = require('pdfkit')
 
-const ITEMS_PER_PAGE = 2
+const ITEMS_PER_PAGE = 1
 
 exports.getProducts = (req,res,next) => {
-    const page = req?.query?.page
+    const page = +req?.query?.page || 1
     let totalItems;
     Product.find()
-    .count()
+    .countDocuments()
     .then(numProducts => {
         totalItems = numProducts;
         return  Product.find()
@@ -22,14 +22,16 @@ exports.getProducts = (req,res,next) => {
         .limit(ITEMS_PER_PAGE)
     })
     .then(products => {
-        // console.log(products);
+        console.log(products);
+        console.log({page, ITEMS_PER_PAGE, totalItems});
         res.render('shop/product-list', {
             prods: products, 
             pageTitle: "All Products", 
             path: "/products",
-            totalProducts: totalItems,
+            csrfToken: req.csrfToken(),
+            currentPage: page,
             hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            hasPrevisousPage: page > 1,
+            hasPreviousPage: page > 1,
             nextPage: page + 1, 
             previousPage: page - 1,
             lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
@@ -60,12 +62,6 @@ exports.getProduct = (req,res,next) => {
             product:product, 
             pageTitle: product.title, 
             path: "/products",
-            totalProducts: totalItems,
-            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-            hasPrevisousPage: page > 1,
-            nextPage: page + 1, 
-            previousPage: page - 1,
-            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
         })
     })
     .catch((err) => {
@@ -78,9 +74,9 @@ exports.getProduct = (req,res,next) => {
 
 exports.getIndex = (req,res,next) => {
     let totalItems;
-    const page = req?.query?.page
+    const page = +req?.query?.page || 1
     Product.find()
-    .count()
+    .countDocuments()
     .then(numProducts => {
         totalItems = numProducts;
         return Product.find()
@@ -89,7 +85,18 @@ exports.getIndex = (req,res,next) => {
     })
     .then(products => {
         // console.log(products);
-        res.render('shop/index', {prods: products, pageTitle: "Shop", path: "/", csrfToken: req.csrfToken()})
+        res.render('shop/index', {
+            prods: products, 
+            pageTitle: "Shop", 
+            path: "/", 
+            csrfToken: req.csrfToken(),
+            currentPage: page,
+            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+            hasPreviousPage: page > 1,
+            nextPage: page + 1, 
+            previousPage: page - 1,
+            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+        })
     })
     .catch((err) => {
         console.log(err);
