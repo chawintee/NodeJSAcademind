@@ -12,12 +12,28 @@ const ITEMS_PER_PAGE = 2
 
 exports.getProducts = (req,res,next) => {
     const page = req?.query?.page
+    let totalItems;
     Product.find()
-    .skip((page - 1) * ITEMS_PER_PAGE)
-    .limit(ITEMS_PER_PAGE)
+    .count()
+    .then(numProducts => {
+        totalItems = numProducts;
+        return  Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE)
+    })
     .then(products => {
-        console.log(products);
-        res.render('shop/product-list', {prods: products, pageTitle: "All Products", path: "/products"})
+        // console.log(products);
+        res.render('shop/product-list', {
+            prods: products, 
+            pageTitle: "All Products", 
+            path: "/products",
+            totalProducts: totalItems,
+            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+            hasPrevisousPage: page > 1,
+            nextPage: page + 1, 
+            previousPage: page - 1,
+            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+        })
     })
     .catch((err) => {
         console.log(err);
@@ -40,7 +56,17 @@ exports.getProduct = (req,res,next) => {
     Product.findById(prodId)
     .then(product => {
         // console.log(product);
-        res.render('shop/product-detail', {product:product, pageTitle: product.title, path: "/products"})
+        res.render('shop/product-detail', {
+            product:product, 
+            pageTitle: product.title, 
+            path: "/products",
+            totalProducts: totalItems,
+            hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+            hasPrevisousPage: page > 1,
+            nextPage: page + 1, 
+            previousPage: page - 1,
+            lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+        })
     })
     .catch((err) => {
         console.log(err);
@@ -51,10 +77,16 @@ exports.getProduct = (req,res,next) => {
 }
 
 exports.getIndex = (req,res,next) => {
+    let totalItems;
     const page = req?.query?.page
     Product.find()
-    .skip((page - 1) * ITEMS_PER_PAGE)
-    .limit(ITEMS_PER_PAGE)
+    .count()
+    .then(numProducts => {
+        totalItems = numProducts;
+        return Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE)
+    })
     .then(products => {
         // console.log(products);
         res.render('shop/index', {prods: products, pageTitle: "Shop", path: "/", csrfToken: req.csrfToken()})
