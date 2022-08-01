@@ -29,25 +29,10 @@
             </article>
             <% } %>
         </div>
-        <section class="pagination">
-
-            <% if(currentPage !== 1 && currentPage !== 1) { %>
-                <a href="/products/?page=1"> 1 </a>
-            <% } %> 
-            <% if (hasPreviousPage) { %> 
-                <a href="/products/?page=<%= previousPage %>" >  <%= previousPage %>  </a>
-            <% } %>
-                    <a href="/products/?page=<%= currentPage %>" class="active">  <%= currentPage %>  </a>
-            <% if (hasNextPage) { %> 
-                <a href="/products/?page=<%= nextPage %>" >  <%= nextPage %>  </a>
-            <% } %>
-            <% if (lastPage !== currentPage && nextPage !== lastPage) { %> 
-                <a href="/products/?page=<%= lastPage %>" >  <%= lastPage %>  </a>
-            <% } %>
-
-        </section>
+            <%-include('../includes/pagination.ejs',{currentPage, previousPage, hasPreviousPage, hasNextPage, nextPage, lastPage}) %>
         <%} else { %>
             <h1>No products !!</h1>
         <% } %>
     </main>
 <%-include('../includes/end.ejs')%>
+

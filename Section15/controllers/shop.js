@@ -8,7 +8,7 @@ const product = require('../models/product');
 
 const PDFDocument = require('pdfkit')
 
-const ITEMS_PER_PAGE = 1
+const ITEMS_PER_PAGE = 2
 
 exports.getProducts = (req,res,next) => {
     const page = +req?.query?.page || 1
@@ -22,8 +22,8 @@ exports.getProducts = (req,res,next) => {
         .limit(ITEMS_PER_PAGE)
     })
     .then(products => {
-        console.log(products);
-        console.log({page, ITEMS_PER_PAGE, totalItems});
+        // console.log(products);
+        // console.log({page, ITEMS_PER_PAGE, totalItems});
         res.render('shop/product-list', {
             prods: products, 
             pageTitle: "All Products", 
