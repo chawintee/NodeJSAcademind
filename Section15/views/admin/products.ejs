@@ -25,7 +25,7 @@
                     <form action="/admin/delete-product" method="POST">
                         <input type="hidden" name="productId" value="<%=product._id%>">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button class="btn">Delete</button>
+                        <button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
                     </form>
                 </div>
             </article>
@@ -36,3 +36,4 @@
         <% } %>
     </main>
 <%-include('../includes/end.ejs')%>
+<script src="/js/admin.js"></script>
