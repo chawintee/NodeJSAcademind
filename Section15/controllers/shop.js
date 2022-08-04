@@ -247,10 +247,30 @@ exports.getOrders = (req,res,next) => {
 }
 
 exports.getCheckout = (req,res,next) => {
-    res.render('shop/checkout',{
-        path:'/checkout',
-        pageTitle: 'Checkout'
-    })
+     // console.log(req.user);
+     req.user
+     .populate('cart.items.productId')
+     // .execPopulate()
+     .then(user => {
+             // console.log(user.cart.items);
+             const products = user.cart.items
+             let total = 0;
+             products.forEach(p => {
+                total += p.quantity * p.productId.price
+             })
+             res.render('shop/checkout',{
+                 path: '/checkout',
+                 pageTitle: 'Checkout',
+                 products: products,
+                 totalSum: total
+             })
+     })
+     .catch((err) => {
+         console.log(err);
+         const error = new Error(err);
+         error.httpStatusCode = 500;
+         return next(error);
+       });
 }
 
 exports.getInvoice = (req,res,next) => {
