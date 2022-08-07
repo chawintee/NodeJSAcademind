@@ -1,11 +1,16 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 
 const port = 8080;
 
 const app = express();
 
-const feedRoutes = require('./routes/feed.js')
+const feedRoutes = require('./routes/feed.js');
 
+// app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
+// app.use(bodyParser.json()); //application/json
+
+app.use(express.json())
 
 app.use('/feed', feedRoutes)
 

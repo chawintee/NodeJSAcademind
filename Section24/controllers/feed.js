@@ -1,7 +1,20 @@
 exports.getPosts = (req, res, next) => {
+    res.json({
+        posts: [{title: 'First Post', content: 'This is the first post!'}]
+    })
+}
 
-
-    res.send({
-        message: 'get Post Path'
+exports.createPost = (req, res, next) => {
+    // const title = req.body.title;
+    // const content = req.body.content;
+    const {title, content} = req.body
+    // Create post in db
+    res.json({
+        message: 'Post created successfully!',
+        post: {
+            _id: new Date().toISOString(),
+            title,
+            content
+        }
     })
 }
